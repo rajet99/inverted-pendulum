@@ -9,6 +9,7 @@ This repository contains the Simulink model, C++ control algorithm implementatio
 The goal of this project is to model the physical dynamics of a single inverted pendulum in 3D space and implement control algorithms to achieve upright balance.
 
 ### Key Features & Control Strategies
+* **Åström-Furuta Swing-Up Control:** Energy-based control strategy that pumps kinetic energy into the pendulum from its downward resting state to swing it up toward vertical equilibrium.
 * **LQR Control:** Optimal state-feedback control for maintaining balance in the linear regime near vertical.
 * **Cascaded PID Control:** An alternative balancing architecture utilizing an outer loop (position/angle reference) and inner loop (rate control) to stabilize the pendulum.
 * **Swing-Up Control & Deceleration Safeguard:** Energy-based swing-up logic to swing the pendulum up from rest. Includes safety deceleration logic to prevent excessive angular velocity if the swing-up gains too much speed, ensuring the LQR or PID can smoothly catch and stabilize it.
