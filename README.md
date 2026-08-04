@@ -20,7 +20,7 @@ The goal of this project is to model the physical dynamics of a single inverted 
 
 Before running the simulation, ensure you have the following installed:
 
-* **MATLAB & Simulink** (R2024b or newer recommended)
+* **MATLAB & Simulink** (R2024b - not forward compatible)
 * **Simscape** & **Simscape Multibody** Toolboxes (required for 3D physics modeling and built-in visualization)
 * **C++ Compiler** (GCC, Clang, or MSVC) if compiling/testing control C++ modules independently
 
@@ -30,7 +30,7 @@ Before running the simulation, ensure you have the following installed:
 
 1. Open **MATLAB R2024b** and set the repository folder as your working directory.
 2. Ensure the control logic discrete time step is defined in your MATLAB workspace. 
-   > ⚠️ **Note:** The control logic requires a discrete sample time variable (e.g., `dt = 0.001`). If running standalone scripts or loading the model directly, ensure `dt = 0.001` (1 ms) is defined in the workspace prior to simulation.
+   > **Note:** The control logic requires a discrete 'timestep' variable (e.g., `timestep = 0.001`). If running standalone scripts or loading the model directly, ensure `timestep = 0.001` (1 ms) is defined in the workspace prior to simulation.
 3. Run `lqr.mlx` to compute linear system dynamics and calculate the optimal LQR gain matrix ($K$).
 4. Open `single_pendulum.slx` in **Simulink**.
 5. Run the simulation:
