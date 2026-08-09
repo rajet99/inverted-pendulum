@@ -45,17 +45,25 @@ Here are some videos demonstrating the functionality and outcomes of this projec
 
 #### 1. PID Control
 
+https://github.com/user-attachments/assets/7054f751-2183-4745-9dd0-bc8eb92f2b7c
+
 A cascaded PID-based simulation showing the pendulum attempting to stabilize while maintaining its center position, inducing oscillations.
 
 #### 2. Swing-up + LQR Control
+
+https://github.com/user-attachments/assets/f5921e66-fd5b-4d24-abee-9b0fb81d95aa
 
 A combined energy-based swing-up and LQR control example showcasing the sharp handoff transition once the pendulum reaches near the desired equilibrium point.
 
 #### 3. Swing-up -> LQR Handoff Failure
 
+https://github.com/user-attachments/assets/b7986674-5172-470c-a4e0-357806709f1b
+
 A demonstration of an unsuccessful swing-up to LQR handoff, highlighting the instability that can occur during the transition, especially using less powerful motors with lower acceleration limits. This is representative of the stepper motor used in the physical project.
 
 #### 4. Swing-up -> LQR Handoff Resolved
+
+https://github.com/user-attachments/assets/c7655e0c-06eb-4ebe-a6ee-0c64d654f04e
 
 A resolved swing-up to LQR handoff with angular velocity damping, showing a smoother transition into balanced control in spite of motor restraints.
 
@@ -70,8 +78,7 @@ A resolved swing-up to LQR handoff with angular velocity damping, showing a smoo
   </a>
 </p>
 
-Utilizing the control logic from this project, I led the implementation of the swing-up + LQR control logic into a real embedded system based on an ESP32 microcontroller, a NEMA17-style stepper motor, and an A4988 driver board. The initial plan was to use a Teensy 4.0 and a BLDC motor with field-oriented control (FOC) via a module like [SimpleFOC](https://github.com/simplefoc); however, due to board and motor controller malfunctions we were forced to switch to iterate to a new architecture.
-Although the swing-up damping logic was not well tuned, the project was limited by time constraints and, even so, the work demonstrated the core functionality of this project and established how the Simulink workflow could be used to prototype control systems for physical linkages. The system was robust to adding disturbances and even new weights at the end of the pendulum, highlighting the effectiveness of LQR control for a system like this despite not having a perfect physics model to calculate gains.
+Utilizing the control logic from this project, I led the implementation of the swing-up + LQR control logic into a real embedded system based on an ESP32 microcontroller, a NEMA17-style stepper motor, and an A4988 driver board. The initial plan was to use a Teensy 4.0 and a BLDC motor with field-oriented control (FOC) via a module like [SimpleFOC](https://github.com/simplefoc). However, due to board and motor controller malfunctions we were forced to switch to iterate to a new architecture. Although the swing-up damping logic was not well tuned, the project was limited by time constraints and, even so, the work demonstrated the core functionality of this project and established how the Simulink workflow could be used to prototype control systems for physical linkages. The system was robust to adding disturbances and even new weights at the end of the pendulum, highlighting the effectiveness of LQR control for a system like this despite not having a perfect physics model to calculate gains.
 
 ## System Requirements
 
