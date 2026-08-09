@@ -8,29 +8,31 @@ This repository contains the Simulink model, C++ control algorithm implementatio
 
 ### Key Features & Control Strategies
 * **Åström-Furuta Swing-Up Control:** Energy-based control strategy that pumps kinetic energy into the pendulum from its downward resting state to swing it up toward vertical equilibrium.
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20V%20%3D%20%5Cfrac%7B1%7D%7B2%7DmL%5E2%5Cdot%7B%5Ctheta%7D%5E2%20%2B%20mgL(1-%5Ccos%5Ctheta)" alt="Swing-up energy equation" />
-  </p>
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20%5Cdot%7BV%7D%20%3D%20mL%5Cdot%7B%5Ctheta%7D(%5Ccos%5Ctheta)%5Cddot%7Bx%7D" alt="Swing-up energy rate equation" />
-  </p>
+  <div align="center">
+
+  $$V = \frac{1}{2} m L^2 \dot{\theta}^2 + m g L (1 - \cos\theta)$$
+
+  $$\dot{V} = m L \dot{\theta} (\cos\theta) \ddot{x}$$
+
+  </div>
 * **LQR Control:** Optimal state-feedback control for maintaining balance in the linear regime near vertical while maintaining desired position.
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20%5Cdot%7Bx%7D%20%3D%20Ax%20%2B%20Bu%2C%20%5Cquad%20u%20%3D%20-Kx" alt="LQR state equation" />
-  </p>
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20J%20%3D%20%5Cint_0%5Cinfty%20(x%5ETQx%20%2B%20u%5ETRu)%2Cdt" alt="LQR cost equation" />
-  </p>
+  <div align="center">
+
+  $$\dot{x} = Ax + Bu, \quad u = -Kx$$
+
+  $$J = \int_{0}^{\infty} (x^T Q x + u^T R u) \, dt$$
+
+  </div>
 * **Cascaded PID Control:** An alternative balancing architecture utilizing an outer loop (position/angle reference) and inner loop (angle/actuator control) to stabilize the pendulum.
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20e_x%20%3D%20x-x_0%2C%20%5Cquad%20e_%5Ctheta%20%3D%20%5Ctheta-%5Ctheta_%7B%5Ctext%7Bref%7D%7D" alt="PID error definitions" />
-  </p>
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20%5Ctheta_%7B%5Ctext%7Bref%7D%7D%20%3D%20K_%7Bp%2Cx%7De_x%20%2B%20K_%7Bi%2Cx%7D%5Cint%20e_x%20dt%20%2B%20K_%7Bd%2Cx%7D%5Cdot%7Be%7D_x" alt="Outer PID equation" />
-  </p>
-  <p align="center">
-    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20u%20%3D%20K_%7Bp%2C%5Ctheta%7De_%5Ctheta%20%2B%20K_%7Bi%2C%5Ctheta%7D%5Cint%20e_%5Ctheta%20dt%20%2B%20K_%7Bd%2C%5Ctheta%7D%5Cdot%7Be%7D_%5Ctheta" alt="Inner PID equation" />
-  </p>
+  <div align="center">
+
+  $$e_x = x - x_0, \quad e_\theta = \theta - \theta_{\text{ref}}$$
+
+  $$\theta_{\text{ref}} = K_{p,x} e_x + K_{i,x} \int e_x \, dt + K_{d,x} \dot{e}_x$$
+
+  $$u = K_{p,\theta} e_\theta + K_{i,\theta} \int e_\theta \, dt + K_{d,\theta} \dot{e}_\theta$$
+
+  </div>
 * **Swing-Up Control & Deceleration Safeguard:** Energy-based swing-up logic to swing the pendulum up from rest. Includes safety deceleration logic to prevent excessive angular velocity if the swing-up gains too much speed, ensuring the LQR or PID can smoothly catch and stabilize it.
 
 * **Built-in 3D Visualization:** Utilizes Simscape Multibody to render and visualize physical pendulum motion and joint dynamics during simulation runs.
