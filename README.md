@@ -8,15 +8,29 @@ This repository contains the Simulink model, C++ control algorithm implementatio
 
 ### Key Features & Control Strategies
 * **Åström-Furuta Swing-Up Control:** Energy-based control strategy that pumps kinetic energy into the pendulum from its downward resting state to swing it up toward vertical equilibrium.
-  $$V = \frac{1}{2} m L^2 \dot{\theta}^2 + m g L (1 - \cos\theta)$$
-  $$\dot{V} = m L \dot{\theta} (\cos\theta) \ddot{x}$$
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20V%20%3D%20%5Cfrac%7B1%7D%7B2%7DmL%5E2%5Cdot%7B%5Ctheta%7D%5E2%20%2B%20mgL(1-%5Ccos%5Ctheta)" alt="Swing-up energy equation" />
+  </p>
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20%5Cdot%7BV%7D%20%3D%20mL%5Cdot%7B%5Ctheta%7D(%5Ccos%5Ctheta)%5Cddot%7Bx%7D" alt="Swing-up energy rate equation" />
+  </p>
 * **LQR Control:** Optimal state-feedback control for maintaining balance in the linear regime near vertical while maintaining desired position.
-  $$\dot{x} = Ax + Bu, \quad u = -Kx$$
-  $$J = \int_{0}^{\infty} (x^T Q x + u^T R u) \, dt$$
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20%5Cdot%7Bx%7D%20%3D%20Ax%20%2B%20Bu%2C%20%5Cquad%20u%20%3D%20-Kx" alt="LQR state equation" />
+  </p>
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20J%20%3D%20%5Cint_0%5Cinfty%20(x%5ETQx%20%2B%20u%5ETRu)%2Cdt" alt="LQR cost equation" />
+  </p>
 * **Cascaded PID Control:** An alternative balancing architecture utilizing an outer loop (position/angle reference) and inner loop (angle/actuator control) to stabilize the pendulum.
-  $$e_x = x - x_0, \quad e_\theta = \theta - \theta_{\text{ref}}$$
-  $$\theta_{\text{ref}} = K_{p,x} e_x + K_{i,x} \int e_x \, dt + K_{d,x} \dot{e}_x$$
-  $$u = K_{p,\theta} e_\theta + K_{i,\theta} \int e_\theta \, dt + K_{d,\theta} \dot{e}_\theta$$
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20e_x%20%3D%20x-x_0%2C%20%5Cquad%20e_%5Ctheta%20%3D%20%5Ctheta-%5Ctheta_%7B%5Ctext%7Bref%7D%7D" alt="PID error definitions" />
+  </p>
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20%5Ctheta_%7B%5Ctext%7Bref%7D%7D%20%3D%20K_%7Bp%2Cx%7De_x%20%2B%20K_%7Bi%2Cx%7D%5Cint%20e_x%20dt%20%2B%20K_%7Bd%2Cx%7D%5Cdot%7Be%7D_x" alt="Outer PID equation" />
+  </p>
+  <p align="center">
+    <img src="https://latex.codecogs.com/svg.image?%5Cdisplaystyle%20u%20%3D%20K_%7Bp%2C%5Ctheta%7De_%5Ctheta%20%2B%20K_%7Bi%2C%5Ctheta%7D%5Cint%20e_%5Ctheta%20dt%20%2B%20K_%7Bd%2C%5Ctheta%7D%5Cdot%7Be%7D_%5Ctheta" alt="Inner PID equation" />
+  </p>
 * **Swing-Up Control & Deceleration Safeguard:** Energy-based swing-up logic to swing the pendulum up from rest. Includes safety deceleration logic to prevent excessive angular velocity if the swing-up gains too much speed, ensuring the LQR or PID can smoothly catch and stabilize it.
 
 * **Built-in 3D Visualization:** Utilizes Simscape Multibody to render and visualize physical pendulum motion and joint dynamics during simulation runs.
@@ -30,41 +44,31 @@ Here are some videos demonstrating the functionality and outcomes of this projec
 ### Simscape Visualizations
 
 #### 1. PID Control
-<p align="center">
-  <video src="./single_pendulum_PID.mp4" width="90%" controls></video>
-</p>
 
 A cascaded PID-based simulation showing the pendulum attempting to stabilize while maintaining its center position, inducing oscillations.
 
 #### 2. Swing-up + LQR Control
-<p align="center">
-  <video src="./single_pendulum.mp4" width="90%" controls></video>
-</p>
 
 A combined energy-based swing-up and LQR control example showcasing the sharp handoff transition once the pendulum reaches near the desired equilibrium point.
 
 #### 3. Swing-up -> LQR Handoff Failure
-<p align="center">
-  <video src="./failed_swing_up.mp4" width="90%" controls></video>
-</p>
 
 A demonstration of an unsuccessful swing-up to LQR handoff, highlighting the instability that can occur during the transition, especially using less powerful motors with lower acceleration limits. This is representative of the stepper motor used in the physical project.
 
 #### 4. Swing-up -> LQR Handoff Resolved
-<p align="center">
-  <video src="./swingup_with_omega_damping.mp4" width="90%" controls></video>
-</p>
 
 A resolved swing-up to LQR handoff with angular velocity damping, showing a smoother transition into balanced control in spite of motor restraints.
 
 ### Embedded Hardware Test Demo
 
-<a href="https://youtu.be/FhDWkm6h2VQ" target="_blank">
-  <img src="https://img.youtube.com/vi/FhDWkm6h2VQ/hqdefault.jpg" alt="Embedded hardware demo 1" width="45%" style="margin-right: 5%;" />
-</a>
-<a href="https://youtu.be/eeGyaRxlmUQ" target="_blank">
-  <img src="https://img.youtube.com/vi/eeGyaRxlmUQ/hqdefault.jpg" alt="Embedded hardware demo 2" width="45%" />
-</a>
+<p align="center">
+  <a href="https://youtu.be/FhDWkm6h2VQ" target="_blank">
+    <img src="https://img.youtube.com/vi/FhDWkm6h2VQ/hqdefault.jpg" alt="Embedded hardware demo 1" width="45%" style="margin-right: 5%;" />
+  </a>
+  <a href="https://youtu.be/eeGyaRxlmUQ" target="_blank">
+    <img src="https://img.youtube.com/vi/eeGyaRxlmUQ/hqdefault.jpg" alt="Embedded hardware demo 2" width="45%" />
+  </a>
+</p>
 
 Utilizing the control logic from this project, I led the implementation of the swing-up + LQR control logic into a real embedded system based on an ESP32 microcontroller, a NEMA17-style stepper motor, and an A4988 driver board. The initial plan was to use a Teensy 4.0 and a BLDC motor with field-oriented control (FOC) via a module like [SimpleFOC](https://github.com/simplefoc); however, due to board and motor controller malfunctions we were forced to switch to iterate to a new architecture.
 Although the swing-up damping logic was not well tuned, the project was limited by time constraints and, even so, the work demonstrated the core functionality of this project and established how the Simulink workflow could be used to prototype control systems for physical linkages. The system was robust to adding disturbances and even new weights at the end of the pendulum, highlighting the effectiveness of LQR control for a system like this despite not having a perfect physics model to calculate gains.
